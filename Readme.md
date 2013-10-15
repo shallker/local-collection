@@ -1,7 +1,7 @@
 
 # local-collection
 
-  Data collection in local storage
+  Records collection in local storage
 
 
 ## Installation
