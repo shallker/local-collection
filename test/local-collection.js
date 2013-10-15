@@ -23,11 +23,22 @@ f(users.count)
 f(users.save)
 f(users.load)
 f(users.destroy)
+f(users.first)
+f(users.last)
+f(users.item)
 
 var add = users.add({username: 'jack'}, er);
 eq(add.username, 'jack')
 eq(add.id, 1)
 ok(add.id)
+
+var first = users.first();
+eq(first.username, 'jack')
+eq(first.id, 1)
+
+var last = users.last();
+eq(last.username, 'jack')
+eq(last.id, 1)
 
 var get = users.get(add.id, er);
 eq(get.username, 'jack')
