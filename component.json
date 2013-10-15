@@ -1,0 +1,17 @@
+{
+  "name": "local-collection",
+  "repo": "shallker/local-collection",
+  "description": "Data collection in local storage",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "shallker-wang/eventy": "*"  
+  },
+  "development": {},
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "index.js",
+    "lib/local-collection.js"
+  ]
+}
