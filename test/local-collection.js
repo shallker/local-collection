@@ -13,42 +13,104 @@ var LocalCollection = require('local-collection');
 
 var users = new LocalCollection('users');
 
-f(users.add)
-f(users.get)
-f(users.exists)
-f(users.has)
-f(users.remove)
-f(users.del)
-f(users.count)
-f(users.save)
-f(users.load)
-f(users.clear)
-f(users.first)
-f(users.last)
-f(users.item)
+f(users.add);
+f(users.get);
+f(users.exists);
+f(users.has);
+f(users.remove);
+f(users.del);
+f(users.count);
+f(users.save);
+f(users.load);
+f(users.clear);
+f(users.first);
+f(users.last);
+f(users.item);
+f(users.each);
+f(users.all);
 
-var add = users.add({username: 'jack'}, er);
-eq(add.username, 'jack')
-eq(add.id, 1)
-ok(add.id)
+users.clear();
 
-var first = users.first();
-eq(first.username, 'jack')
-eq(first.id, 1)
+// .add()
+(function () {
+  var user = users.add({username: 'jack'}, er)
 
-var last = users.last();
-eq(last.username, 'jack')
-eq(last.id, 1)
+  eq(user.username, 'jack')
+  eq(user.id, 1)
 
-var get = users.get(add.id, er);
-eq(get.username, 'jack')
-eq(get.id, add.id)
+  users.clear()
+})();
 
-var set = users.set(get.id, {username: 'john', id: 2}, er);
-eq(set.username, 'john')
-eq(set.id, 2)
+// .first()
+(function () {
+  users.add({username: 'jack'}, er)
 
-var del = users.del(set.id, er);
-eq(del, true)
+  var first = users.first();
+
+  eq(first.username, 'jack')
+  eq(first.id, 1)
+
+  users.clear()
+})();
+
+// .last()
+(function () {
+  users.add({username: 'jack'}, er)
+
+  var last = users.last();
+
+  eq(last.username, 'jack')
+  eq(last.id, 1)
+
+  users.clear()
+})();
+
+// .get()
+(function () {
+  var add = users.add({username: 'jack'}, er);
+  var get = users.get(add.id, er);
+
+  eq(get.username, 'jack')
+  eq(get.id, add.id)
+
+  users.clear()
+})();
+
+// .set()
+(function () {
+  var user = users.add({username: 'jack'}, er);
+  var newUser = users.set(user.id, {username: 'john', id: 2}, er);
+
+  eq(newUser.username, 'john')
+  eq(newUser.id, 2)
+
+  users.clear()
+})();
+
+// .del()
+(function () {
+  var user = users.add({username: 'jack'}, er);
+
+  eq(users.del(user.id, er), true);
+  eq(users.has(user.id), false);
+})();
+
+// instance events
+(function () {
+  var user = users.add({username: 'jack'}, er);
+
+  user.on('update', function () {
+    console.log(user, 'on update')
+  });
+
+  user.on('remove', function () {
+    console.log(user, 'on remove')
+  });
+
+  users.set(user.id, {username: 'john'}, er);
+  eq(user.username, 'john');
+
+  users.del(user.id, er);
+})();
 
 console.log('test done')
