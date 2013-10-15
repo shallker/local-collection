@@ -27,6 +27,7 @@ f(users.first);
 f(users.last);
 f(users.item);
 f(users.each);
+f(users.one);
 f(users.all);
 
 users.clear();
@@ -111,6 +112,27 @@ users.clear();
   eq(user.username, 'john');
 
   users.del(user.id, er);
+})();
+
+// .one() .all()
+(function () {
+  users.add({username: 'jack', sex: 'male'});
+  users.add({username: 'john', sex: 'male'});
+
+  var one = users.one({sex: 'male'});
+
+  eq(one.username, 'jack')
+  eq(one.sex, 'male')
+
+  var all = users.all({sex: 'male'});
+
+  eq(all.length, 2);
+  eq(all[0].sex, 'male')
+  eq(all[1].sex, 'male')
+  eq(all[0].username, 'jack')
+  eq(all[1].username, 'john')
+
+  users.clear();
 })();
 
 console.log('test done')
