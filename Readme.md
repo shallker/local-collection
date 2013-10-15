@@ -10,6 +10,15 @@
 
     $ component install shallker/local-collection
 
+## Quick Start
+```javascript
+var LocalCollection = require('local-collection');
+var users = new LocalCollection('users');
+
+users.load();
+
+var user = users.add({username: 'jack'});
+```
 
 ## API
 ### collection
