@@ -27,8 +27,7 @@ f(users.first);
 f(users.last);
 f(users.item);
 f(users.each);
-f(users.one);
-f(users.all);
+f(users.query);
 
 users.clear();
 
@@ -114,34 +113,35 @@ users.clear();
   users.del(user.id, er);
 })();
 
-// .one() .all()
+// query
 (function () {
   var john = users.add({username: 'john', sex: 'male'});
   var jack = users.add({username: 'jack', sex: 'male'});
 
-  var id = users.one({sex: 'male'});
+  var ids = users.query({sex: 'male', $limit: 1});
 
-  eq(id, john.id)
+  eq(ids.length, 1)
+  eq(ids[0], john.id)
 
-  var ids = users.all({sex: 'male', $ascend: 'id'});
+  var ids = users.query({sex: 'male', $ascend: 'id'});
 
   eq(ids.length, 2);
   eq(ids[0], john.id)
   eq(ids[1], jack.id)
 
-  var ids = users.all({sex: 'male', $descend: 'id'});
+  var ids = users.query({sex: 'male', $descend: 'id'});
 
   eq(ids.length, 2);
   eq(ids[0], jack.id)
   eq(ids[1], john.id)
 
-  var ids = users.all({sex: 'male', $ascend: 'username'});
+  var ids = users.query({sex: 'male', $ascend: 'username'});
 
   eq(ids.length, 2);
   eq(ids[0], jack.id)
   eq(ids[1], john.id)
 
-  var ids = users.all({sex: 'male', $descend: 'username'});
+  var ids = users.query({sex: 'male', $descend: 'username'});
 
   eq(ids.length, 2);
   eq(ids[0], john.id)
