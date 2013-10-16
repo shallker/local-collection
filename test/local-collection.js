@@ -116,21 +116,36 @@ users.clear();
 
 // .one() .all()
 (function () {
-  users.add({username: 'jack', sex: 'male'});
-  users.add({username: 'john', sex: 'male'});
+  var john = users.add({username: 'john', sex: 'male'});
+  var jack = users.add({username: 'jack', sex: 'male'});
 
-  var one = users.one({sex: 'male'});
+  var id = users.one({sex: 'male'});
 
-  eq(one.username, 'jack')
-  eq(one.sex, 'male')
+  eq(id, john.id)
 
-  var all = users.all({sex: 'male'});
+  var ids = users.all({sex: 'male', $ascend: 'id'});
 
-  eq(all.length, 2);
-  eq(all[0].sex, 'male')
-  eq(all[1].sex, 'male')
-  eq(all[0].username, 'jack')
-  eq(all[1].username, 'john')
+  eq(ids.length, 2);
+  eq(ids[0], john.id)
+  eq(ids[1], jack.id)
+
+  var ids = users.all({sex: 'male', $descend: 'id'});
+
+  eq(ids.length, 2);
+  eq(ids[0], jack.id)
+  eq(ids[1], john.id)
+
+  var ids = users.all({sex: 'male', $ascend: 'username'});
+
+  eq(ids.length, 2);
+  eq(ids[0], jack.id)
+  eq(ids[1], john.id)
+
+  var ids = users.all({sex: 'male', $descend: 'username'});
+
+  eq(ids.length, 2);
+  eq(ids[0], john.id)
+  eq(ids[1], jack.id)
 
   users.clear();
 })();
