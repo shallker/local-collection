@@ -39,6 +39,8 @@ var user = users.add({username: 'jack'});
 ## Test
   http://shallker.github.io/local-collection/test   
 
+## Todo
+- create pseudo record instance
 
 ## License
 
